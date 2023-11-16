@@ -133,8 +133,7 @@ export class KeyRing {
     alias: string,
     address: string,
     publicKey: string,
-    bip44Path: Bip44Path,
-    parentId?: string
+    bip44Path: Bip44Path
   ): Promise<AccountStore | false> {
     const id = generateId(UUID_NAMESPACE, alias, address);
     const accountStore: AccountStore = {
@@ -146,7 +145,6 @@ export class KeyRing {
       chainId: this.chainId,
       path: bip44Path,
       type: AccountType.Ledger,
-      parentId,
     };
     await this.vaultService.add<AccountStore, SensitiveAccountStoreData>(
       KEYSTORE_KEY,
@@ -157,7 +155,7 @@ export class KeyRing {
     // Prepare SDK store
     this.sdk.clear_storage();
     await this.initSdkStore(id);
-    await this.setActiveAccount(parentId || id, AccountType.Ledger);
+    await this.setActiveAccount(id, AccountType.Ledger);
     return accountStore;
   }
 
