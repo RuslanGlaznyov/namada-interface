@@ -458,8 +458,8 @@ export class KeyRingService {
     return this._keyRing.queryBalances(account.public.owner);
   }
 
-  async initSdkStore(activeAccountId: string): Promise<void> {
-    return await this._keyRing.initSdkStore(activeAccountId);
+  async initSdkStore(): Promise<void> {
+    return await this._keyRing.initSdkStore();
   }
 
   async queryPublicKey(address: string): Promise<string | undefined> {
